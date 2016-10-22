@@ -1,4 +1,4 @@
-package game;
+package game.core;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.ContextAttribs;
@@ -12,13 +12,14 @@ public class DisplayUtil{
 	
 	public static void create(){
 		try{
+			Display.setTitle("Test LWJGL2 sidescroller");
 			ContextAttribs atrb=new ContextAttribs(3, 2).withForwardCompatible(true).withProfileCore(true);
-			Display.setDisplayMode(new DisplayMode(1000, 700));
+			Display.setDisplayMode(new DisplayMode(1000, 600));
 			Display.create(new PixelFormat(), atrb);
 		}catch(LWJGLException e){
 			e.printStackTrace();
 		}
-		GL11.glViewport(0, 0, 1000, 700);
+		GL11.glViewport(0, 0, 1000, 600);
 	}
 	
 	public static void update(){
