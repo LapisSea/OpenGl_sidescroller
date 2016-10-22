@@ -5,9 +5,19 @@ import game.util.Util;
 
 public class Game{
 	
+	private static Game instance;
+	public static Game get(){
+		return instance;
+	}
+	
 	private boolean paused=false;
 	private Timer timer=new Timer(20, 60);
 	private Renderer renderer=new Renderer();
+	
+	
+	public Game(){
+		instance=this;
+	}
 	
 	public void start(){
 		Runtime.getRuntime().addShutdownHook(new Thread(()->cleanup()));
@@ -22,7 +32,7 @@ public class Game{
 				timer.updateFinish();
 			}
 			if(timer.shouldRender()){
-				renderer.redner();
+				renderer.render();
 				DisplayUtil.update();
 				timer.renderFinish();
 			}
@@ -39,5 +49,7 @@ public class Game{
 	private void cleanup(){
 		
 	}
-	
+	public float getPartialTick(){
+		return timer.getPartialTick();
+	}
 }
