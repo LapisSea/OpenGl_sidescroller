@@ -4,11 +4,12 @@ import game.util.LogUtil;
 
 public class Timer{
 	
-	private long lastTimeUpdated,lastTimeRendered,/**update period*/up,/**frame period*/fp,lastSec;
-	private static final int SECOND=1000000000;
+	private long				lastTimeUpdated,lastTimeRendered,/**update period*/up,/**frame period*/fp,lastSec;
+	private static final int	SECOND	=1000000000;
 	
-	private int update,updates,frames,updatesCount,framesCount;
-	private boolean render;
+	private int		update,updates,frames,updatesCount,framesCount;
+	private boolean	render;
+	private float	partialTick;
 	
 	public Timer(int ups, int fps){
 		setUPS(ups);
@@ -19,7 +20,7 @@ public class Timer{
 		long time=time();
 		if(time-lastTimeUpdated>=up){
 			lastTimeUpdated=time;
-			if(update<100)update++;
+			if(update<100) update++;
 		}
 		time=time();
 		if(time-lastTimeRendered>=fp){
@@ -29,9 +30,9 @@ public class Timer{
 		time=time();
 		if(time-lastSec>=SECOND){
 			lastSec=time;
+			LogUtil.println("UPS:", updatesCount, "FPS:", framesCount);
 			updatesCount=0;
 			framesCount=0;
-			LogUtil.println("UPS:",updatesCount,"FPS:",framesCount);
 		}
 	}
 	
@@ -42,6 +43,7 @@ public class Timer{
 	public void setUPS(int ups){
 		up=SECOND/ups;
 	}
+	
 	public void setFPS(int fps){
 		fp=SECOND/fps;
 	}
@@ -53,6 +55,7 @@ public class Timer{
 		}
 		return false;
 	}
+	
 	public boolean shouldUpdate(){
 		if(update>0){
 			update--;
@@ -60,16 +63,28 @@ public class Timer{
 		}
 		return false;
 	}
+	
 	public void renderFinish(){
 		framesCount++;
 	}
+	
 	public void updateFinish(){
 		updatesCount++;
 	}
+	
 	public int getFps(){
 		return frames+1;
 	}
+	
 	public int getUps(){
 		return updates;
+	}
+	
+	public void calcPartialTicks(){
+		partialTick=(float)(((double)(time())-lastTimeUpdated)/SECOND);
+	}
+	
+	public float getPartialTick(){
+		return partialTick;
 	}
 }

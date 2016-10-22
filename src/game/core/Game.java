@@ -9,10 +9,16 @@ import game.util.Util;
 
 public class Game{
 	
+	private static Game instance;
+	public static Game get(){
+		return instance;
+	}
+	
 	private boolean paused=false;
 	private Timer timer=new Timer(20, 60);
 	private Loader loader = new Loader();
 	private Renderer renderer=new Renderer();
+
 	private float[] positions = {
 		-0.5F, 0.5F, 0,
 		-0.5F, -0.5F, 0,
@@ -23,6 +29,13 @@ public class Game{
 			3, 1, 2
 			};
 	private RawModel model = loader.loadToVAO(positions, indices);
+
+	
+	
+	public Game(){
+		instance=this;
+	}
+	
 	public void start(){
 		Runtime.getRuntime().addShutdownHook(new Thread(()->cleanup()));
 	}
@@ -54,5 +67,7 @@ public class Game{
 	private void cleanup(){
 		
 	}
-	
+	public float getPartialTick(){
+		return timer.getPartialTick();
+	}
 }

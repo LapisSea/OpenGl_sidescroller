@@ -13,7 +13,7 @@ public class Main{
 		
 		Map<String,String> args=new HashMap<>();
 		for(String argRaw:argsRaw){
-			String[] arg=argRaw.split("--");
+			String[] arg=argRaw.split("=");
 			args.put(arg[0], arg.length<2?"":arg[1]);
 		}
 		launch(args);
