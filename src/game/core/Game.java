@@ -22,7 +22,7 @@ public class Game{
 				timer.updateFinish();
 			}
 			if(timer.shouldRender()){
-				renderer.redner();
+				renderer.render();
 				DisplayUtil.update();
 				timer.renderFinish();
 			}
