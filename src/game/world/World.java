@@ -10,11 +10,16 @@ public class World{
 	
 	private Map<Vec2i,Chunk> chunks=new HashMap<>();
 	private static final Vec2i VEC2I=new Vec2i(0, 0);
+	private long worldTime;
 	
 	public World(){
 		
 	}
-
+	
+	public void update(){
+		setWorldTime(getWorldTime()+1);
+	}
+	
 	public Block getBlock(Vec2i pos){
 		Chunk ch=getChunkAt(pos);
 		
@@ -51,6 +56,14 @@ public class World{
 		}
 		
 		return ch;
+	}
+
+	public long getWorldTime(){
+		return worldTime;
+	}
+
+	public void setWorldTime(long worldTime){
+		this.worldTime = worldTime;
 	}
 	
 }
