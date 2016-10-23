@@ -3,8 +3,8 @@ package game.rendering.shaders;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 
+import game.loading.ResourceShader;
 import game.util.LogUtil;
-import game.util.assetload.ResourceShader;
 
 public abstract class ShaderProgram{
 	

@@ -1,6 +1,5 @@
 package game.loading;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
@@ -23,6 +22,7 @@ public class Loader {
 	private List<Integer> vaos = new ArrayList<>();
 	private List<Integer> vbos = new ArrayList<>();
 	private List<Integer> textures = new ArrayList<>();
+	private static final ResourceTexture DEFAULT_IMG=new ResourceTexture("default");
 	
 	public RawModel loadToVAO(float[] positions, int[] indices){
 		int vaoID = createVAO();
@@ -32,28 +32,28 @@ public class Loader {
 		return new RawModel(vaoID, indices.length);
 	};
 	
-	public int loadTexture(String name){
-		Texture texture = null;
-		int textureId = 0;
+	public int loadTexture(ResourceTexture src){
+		Texture texture=null;
+		int textureId=0;
 		try{
-			texture = TextureLoader.getTexture("PNG", new FileInputStream("assets/texture/" + name + ".png"));
-			textureId = texture.getTextureID();
+			texture=TextureLoader.getTexture("PNG", src.getStream());
+			textureId=texture.getTextureID();
 			textures.add(textureId);
 			return textureId;
-		} catch (FileNotFoundException e){
-			LogUtil.println("Texture " + name + " is not found!");
+		}catch(FileNotFoundException e){
+			LogUtil.println("Texture "+src.getFile()+" is not found!");
 			e.printStackTrace();
-		} catch (Exception e){
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 		
 		try{
-			texture = TextureLoader.getTexture("PNG", new FileInputStream("assets/texture/default.png"));
-			textureId = texture.getTextureID();
+			texture=TextureLoader.getTexture("PNG", DEFAULT_IMG.getStream());
+			textureId=texture.getTextureID();
 			textures.add(textureId);
 			return texture.getTextureID();
-		} catch(Exception e){
-			LogUtil.println("Probably you have deleted default.png. Please bring it back or suck my dick.");
+		}catch(Exception e){
+			LogUtil.println("Probably you have deleted default.png. Please bring it back or suck my dick, bitch.");
 			e.printStackTrace();
 		}
 		System.exit(1);

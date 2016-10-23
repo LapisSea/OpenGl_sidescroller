@@ -22,12 +22,12 @@ public class Main{
 	private static void launch(Map<String,String> args){
 		LogUtil.println("Initialization of display");
 		DisplayUtil.create();
-		DisplayUtil.update();
 		LogUtil.println("Initialization of game");
 		Game game=new Game();
 		game.start();
 		LogUtil.println("Game has been successfully initialized");
 		game.run();
 		game.cleanup();
+		LogUtil.println("Cyka next time, please");
 	}
 }

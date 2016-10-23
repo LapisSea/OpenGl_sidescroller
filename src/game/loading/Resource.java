@@ -1,4 +1,4 @@
-package game.util.assetload;
+package game.loading;
 
 import java.io.File;
 import java.io.FileInputStream;

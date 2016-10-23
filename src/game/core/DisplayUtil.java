@@ -13,6 +13,7 @@ public class DisplayUtil{
 	public static void create(){
 		try{
 			Display.setTitle("Test LWJGL2 sidescroller");
+			Display.setResizable(true);
 			ContextAttribs atrb=new ContextAttribs(3, 2).withForwardCompatible(true).withProfileCore(true);
 			Display.setDisplayMode(new DisplayMode(1000, 600));
 			Display.create(new PixelFormat(), atrb);
@@ -20,7 +21,6 @@ public class DisplayUtil{
 			e.printStackTrace();
 			System.exit(1);
 		}
-		GL11.glViewport(0, 0, 1000, 600);
 	}
 	
 	public static void update(){

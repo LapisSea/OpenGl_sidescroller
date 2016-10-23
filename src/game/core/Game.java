@@ -4,9 +4,9 @@ import org.lwjgl.opengl.Display;
 
 import game.loading.Loader;
 import game.rendering.Renderer;
-import game.util.LogUtil;
 import game.util.Util;
 import game.world.BlockRegistry;
+import game.world.World;
 
 public class Game{
 	
@@ -22,12 +22,14 @@ public class Game{
 	public final BlockRegistry blocks=new BlockRegistry();
 	private boolean cleanedUp=false;
 	
+	public World world;
 	
 	public Game(){
 		instance=this;
 	}
 	
 	public void start(){
+		world=new World();
 	}
 	
 	public void run(){
@@ -58,7 +60,7 @@ public class Game{
 	
 	
 	private void gameUpdate(){
-		
+		world.update();
 	}
 	
 	public void cleanup(){
@@ -66,7 +68,6 @@ public class Game{
 		cleanedUp=true;
 		
 		DisplayUtil.close();
-		LogUtil.println("Cyka next time, please");
 		
 	}
 	public float getPartialTick(){

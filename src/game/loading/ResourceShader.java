@@ -1,15 +1,15 @@
-package game.util.assetload;
+package game.loading;
 
 import java.io.File;
 
 public class ResourceShader extends Resource{
 	
 	protected boolean isVertex;
-	public ResourceShader(String localPath){
-		this(localPath,false);
+	public ResourceShader(String shaderName){
+		this(shaderName,false);
 	}
-	public ResourceShader(String localPath,boolean isVertex){
-		super("assets/shaders/"+localPath);
+	public ResourceShader(String shaderName,boolean isVertex){
+		super("assets/shaders/"+shaderName);
 		this.isVertex=isVertex;
 	}
 	
@@ -23,7 +23,7 @@ public class ResourceShader extends Resource{
 		return this;
 	}
 	public ResourceShader toVertex(){
-		this.isVertex=false;
+		this.isVertex=true;
 		return this;
 	}
 }
