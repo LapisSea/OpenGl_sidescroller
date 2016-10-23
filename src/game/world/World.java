@@ -43,6 +43,7 @@ public class World{
 	public Chunk populate(Vec2i pos){
 		pos=pos.copy();
 		Chunk ch=new Chunk(VEC2I.copy());
+		
 		for(int x=0;x<Chunk.CHUNK_SIZE;x++){
 			for(int y=0;y<Chunk.CHUNK_SIZE;y++){
 				ch.setBlock(new Vec2i(x, y), (byte)Math.round((Game.get().blocks.getSize()-1)*Math.random()));
