@@ -30,6 +30,7 @@ public class Game{
 	
 	public void start(){
 		world=new World();
+		renderer.init();
 	}
 	
 	public void run(){
