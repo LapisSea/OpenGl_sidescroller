@@ -1,4 +1,4 @@
-package game.util.assetload.textures;
+package game.loading.textures;
 
 import org.lwjgl.opengl.GL11;
 

@@ -1,10 +1,10 @@
-package game.rendering;
+package game.rendering.models;
 
-public class RawModel {
+public class BasicModel{
 	private int vaoID;
 	private int vertexCount;
 	
-	public RawModel(int vaoId, int vertexCount){
+	public BasicModel(int vaoId, int vertexCount){
 		this.vaoID = vaoId;
 		this.vertexCount = vertexCount;
 	}

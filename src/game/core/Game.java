@@ -18,7 +18,7 @@ public class Game{
 	private boolean paused=false;
 	private Timer timer=new Timer(20, 60);
 	public Loader loader = new Loader();
-	private Renderer renderer=new Renderer();
+	private Renderer renderer=new Renderer(this);
 	public final BlockRegistry blocks=new BlockRegistry();
 	private boolean cleanedUp=false;
 	
@@ -47,7 +47,7 @@ public class Game{
 			
 			if(timer.shouldRender()){
 				
-				renderer.renderScene(this);
+				renderer.renderScene();
 				timer.renderFinish();
 				
 			}
@@ -72,5 +72,9 @@ public class Game{
 	}
 	public float getPartialTick(){
 		return timer.getPartialTick();
+	}
+
+	public void onResize(int windowWidth, int windowHeight){
+		
 	}
 }

@@ -1,8 +1,8 @@
 package game.loading;
 
 import game.core.Game;
-import game.util.assetload.textures.GLTexture;
-import game.util.assetload.textures.IGLTexture;
+import game.loading.textures.GLTexture;
+import game.loading.textures.IGLTexture;
 
 public class ResourceTexture extends Resource{
 	

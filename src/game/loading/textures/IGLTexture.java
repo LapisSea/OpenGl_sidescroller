@@ -1,4 +1,4 @@
-package game.util.assetload.textures;
+package game.loading.textures;
 
 
 public interface IGLTexture{
