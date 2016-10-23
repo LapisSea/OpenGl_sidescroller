@@ -6,6 +6,7 @@ import game.loading.Loader;
 import game.rendering.Renderer;
 import game.util.LogUtil;
 import game.util.Util;
+import game.world.BlockRegistry;
 
 public class Game{
 	
@@ -18,6 +19,7 @@ public class Game{
 	private Timer timer=new Timer(20, 60);
 	public Loader loader = new Loader();
 	private Renderer renderer=new Renderer();
+	public final BlockRegistry blocks=new BlockRegistry();
 	private boolean cleanedUp=false;
 	
 	

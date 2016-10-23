@@ -1,17 +1,13 @@
 package game.world;
 
+import game.util.registry.IndexableRegisterObject;
 
-public class Block{
-	private final int id;
+public abstract class Block extends IndexableRegisterObject{
 	
-	public Block(int id){
-		this.id=id;
+	public Block(){
+		
 	}
 	
-	
-	public int getModel(){
-		return -1;
-	}
 	
 	
 	public void onColided(){

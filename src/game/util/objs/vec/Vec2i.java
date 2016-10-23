@@ -7,14 +7,17 @@ public class Vec2i implements Calculable<Vec2i>{
 	private int x,y;
 	
 	public Vec2i(int x, int y){
-		this.setX(x);
-		this.setY(y);
+		this.set(x, y);
 	}
 	
 	public int getX(){
 		return x;
 	}
-	
+
+	public void set(int x, int y){
+		this.setX(x);
+		this.setY(y);
+	}
 	public void setX(int x){
 		this.x=x;
 	}
