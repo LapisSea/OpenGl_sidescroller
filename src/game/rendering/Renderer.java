@@ -62,14 +62,19 @@ public class Renderer{
 			e.printStackTrace();
 		}
 		shader=new StaticShader();
-		en=new Entity(model, new Vector2f(0.5F,0), new Vector2f(0.5F,0.5F), 0, shader);
+		en=new Entity(model, new Vector2f(0.4F,0), new Vector2f(0.5F,0.5F), 0, shader);
 	}
 	
 	public void renderScene(){
 		prepare();
 		en.rotation+=5;
-
+		double time=System.currentTimeMillis()/100D;
+		en.scale.x=(float)(0.25+Math.sin(time)*0.15);
+		en.scale.y=(float)(0.25+Math.cos(time)*0.15);
 		render(en);
+		time*=1.2;
+		en.scale.x=(float)(0.25+Math.cos(time)*0.15);
+		en.scale.y=(float)(0.25+Math.sin(time)*0.15);
 		en.rotation*=-1;
 		en.pos.x*=-1;
 		render(en);
