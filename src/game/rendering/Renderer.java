@@ -35,9 +35,7 @@ public class Renderer{
 	
 	public void prepare(){
 		glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-		glClearColor(0, 0, 0, 1);
-		byte b=10;
-		glColor3ub(b,b,b);
+		glClearColor(0, 0, 1, 1);
 	}
 	
 	public void render(RawModel model){

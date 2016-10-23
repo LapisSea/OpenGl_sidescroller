@@ -18,6 +18,7 @@ public class DisplayUtil{
 			Display.create(new PixelFormat(), atrb);
 		}catch(LWJGLException e){
 			e.printStackTrace();
+			System.exit(1);
 		}
 		GL11.glViewport(0, 0, 1000, 600);
 	}
