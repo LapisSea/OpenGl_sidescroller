@@ -66,6 +66,7 @@ public class Timer{
 	
 	public void renderFinish(){
 		framesCount++;
+		DisplayUtil.update();
 	}
 	
 	public void updateFinish(){

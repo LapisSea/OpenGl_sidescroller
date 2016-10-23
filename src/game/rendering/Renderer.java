@@ -1,21 +1,50 @@
 package game.rendering;
 
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL20;
-import org.lwjgl.opengl.GL30;
+import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL20.*;
+import static org.lwjgl.opengl.GL30.*;
+
+import game.core.Game;
 
 public class Renderer{
 	
+	private RawModel model;
+	
+	public void renderScene(Game game){
+		if(model==null){
+			
+			float[] positions={
+				-0.5F,  0.5F, 0,
+				-0.5F, -0.5F, 0,
+				 0.5F, -0.5F, 0,
+				 0.5F,  0.5F, 0
+			};
+			int[] indices={
+				0, 1, 3,
+				3, 1, 2
+			};
+			try{
+				model=game.loader.loadToVAO(positions, indices);
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		prepare();
+		render(model);
+	}
+	
 	public void prepare(){
-		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
-		GL11.glClearColor(1, 0, 0, 1);
+		glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+		glClearColor(0, 0, 0, 1);
+		byte b=10;
+		glColor3ub(b,b,b);
 	}
 	
 	public void render(RawModel model){
-		GL30.glBindVertexArray(model.getVaoID());
-		GL20.glEnableVertexAttribArray(model.getVaoID());
-		GL11.glDrawElements(GL11.GL_TRIANGLES, model.getVertexCount(), GL11.GL_UNSIGNED_INT, 0);
-		GL20.glDisableVertexAttribArray(model.getVaoID());
-		GL30.glBindVertexArray(0);
+		glBindVertexArray(model.getVaoID());
+		glEnableVertexAttribArray(0);
+		glDrawElements(GL_TRIANGLES, model.getVertexCount(), GL_UNSIGNED_INT, 0);
+		glDisableVertexAttribArray(0);
+		glBindVertexArray(0);
 	}
 }

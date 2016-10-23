@@ -28,7 +28,6 @@ public class Main{
 		game.start();
 		LogUtil.println("Game has been successfully initialized");
 		game.run();
-		LogUtil.println("Cya next time, please");
-		DisplayUtil.close();
+		game.cleanup();
 	}
 }
