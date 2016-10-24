@@ -1,5 +1,6 @@
 package game.rendering.shaders;
 
+import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.util.vector.Matrix4f;
@@ -13,7 +14,8 @@ public abstract class ShaderProgram{
 	
 	private int id,vsId,fsId;
 	private final ResourceShader src;
-	private UniformMat4 transformLoader;
+	private UniformMat4 transformLoader,viewMatLoader;
+	
 	public ShaderProgram(ResourceShader src){
 		this.src=src;
 		init();
@@ -33,6 +35,7 @@ public abstract class ShaderProgram{
 	protected void initUniforms(){
 		LogUtil.println(this);
 		transformLoader=makeUniformLoader(UniformMat4.class, "transform");
+		viewMatLoader=makeUniformLoader(UniformMat4.class, "viewMat");
 	}
 	
 	
@@ -89,5 +92,20 @@ public abstract class ShaderProgram{
 	public void applyTransform(Matrix4f transform){
 		transformLoader.setValue(transform);
 		transformLoader.load();
+	}
+	
+	public void fixAspectRatio(){
+
+		Matrix4f projectionMatrix = new Matrix4f();
+		float aspectRatio = (float)Display.getWidth() / (float)Display.getHeight();
+		 
+		float y_scale = aspectRatio;
+		float x_scale = y_scale / aspectRatio;
+		 
+		projectionMatrix.m00 = x_scale;
+		projectionMatrix.m11 = y_scale;
+		
+		viewMatLoader.setValue(projectionMatrix);
+		viewMatLoader.load();
 	}
 }

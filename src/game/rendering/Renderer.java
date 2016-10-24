@@ -67,14 +67,14 @@ public class Renderer{
 	
 	public void renderScene(){
 		prepare();
-		en.rotation+=5;
+		en.rotation+=3;
 		double time=System.currentTimeMillis()/100D;
-		en.scale.x=(float)(0.25+Math.sin(time)*0.15);
-		en.scale.y=(float)(0.25+Math.cos(time)*0.15);
+		en.scale.x=(float)(0.3+Math.sin(time)*0.05);
+		en.scale.y=(float)(0.3+Math.cos(time*1.2)*0.05);
 		render(en);
 		time*=1.2;
-		en.scale.x=(float)(0.25+Math.cos(time)*0.15);
-		en.scale.y=(float)(0.25+Math.sin(time)*0.15);
+		en.scale.x=(float)(0.3+Math.cos(time*1.4)*0.05);
+		en.scale.y=(float)(0.3+Math.sin(time*1.6)*0.05);
 		en.rotation*=-1;
 		en.pos.x*=-1;
 		render(en);
@@ -114,6 +114,7 @@ public class Renderer{
 	public void render(Entity entity){
 		TexturedModel model=entity.model;
 		entity.shader.start();
+		entity.shader.fixAspectRatio();
 		entity.shader.applyTransform(MatrixUtil.createTransformMat(entity.pos, entity.rotation, entity.scale));
 		model.getTexture().bind();
 		
@@ -128,5 +129,4 @@ public class Renderer{
 		glDisableVertexAttribArray(0);
 		glBindVertexArray(0);
 	}
-
 }
