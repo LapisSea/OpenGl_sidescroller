@@ -1,5 +1,7 @@
 package game.loading;
 
+import static org.lwjgl.opengl.GL11.*;
+
 import java.io.FileNotFoundException;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
@@ -25,7 +27,8 @@ public class Loader {
 	private List<Integer> textures = new ArrayList<>();
 	private static final ResourceTexture DEFAULT_IMG=new ResourceTexture("default");
 	
-	public TexturedModel loadToVAO(float[] positions, float[] uvs, int[] indices, IGLTexture texture){
+	public TexturedModel loadModel(float[] positions, float[] uvs, int[] indices, IGLTexture texture){
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		int vaoID = createVAO();
 		bindIndicesBuffer(indices);
 		storeDataInAttributeList(0, 3/*x,y,z*/, positions);

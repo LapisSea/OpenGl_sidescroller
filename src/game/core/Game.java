@@ -1,10 +1,14 @@
 package game.core;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.lwjgl.opengl.Display;
 
 import game.loading.Loader;
 import game.rendering.Renderer;
 import game.util.Util;
+import game.util.interf.ResizeListener;
 import game.world.BlockRegistry;
 import game.world.World;
 
@@ -15,12 +19,15 @@ public class Game{
 		return instance;
 	}
 	
-	private boolean paused=false;
-	private Timer timer=new Timer(20, 60);
-	public Loader loader = new Loader();
-	private Renderer renderer=new Renderer(this);
-	public final BlockRegistry blocks=new BlockRegistry();
-	private boolean cleanedUp=false;
+	private boolean					paused		=false;
+	private Timer					timer		=new Timer(20, 60);
+	public Loader					loader		=new Loader();
+	private List<ResizeListener>	resizeables	=new ArrayList<>();
+	private Renderer				renderer	=new Renderer(this);
+	public final BlockRegistry		blocks		=new BlockRegistry();
+	private boolean					cleanedUp	=false;
+	
+	
 	
 	public World world;
 	
@@ -42,7 +49,7 @@ public class Game{
 			
 			if(timer.shouldUpdate()){
 				
-				if(paused)gameUpdate();
+				if(!paused)gameUpdate();
 				timer.updateFinish();
 			}
 			
@@ -58,24 +65,28 @@ public class Game{
 		}
 		
 	}
+	public void dispose(){
+		if(cleanedUp)return;
+		cleanedUp=true;
+		
+		DisplayUtil.close();
+	}
+	
+	public void addResizeListener(ResizeListener listener){
+		resizeables.add(listener);
+	}
+	
+	public void onResize(int x, int y){
+		resizeables.forEach(r->r.onResize(x, y));
+	}
 	
 	
 	private void gameUpdate(){
 		world.update();
 	}
 	
-	public void cleanup(){
-		if(cleanedUp)return;
-		cleanedUp=true;
-		
-		DisplayUtil.close();
-		
-	}
 	public float getPartialTick(){
 		return timer.getPartialTick();
 	}
 
-	public void onResize(int windowWidth, int windowHeight){
-		
-	}
 }

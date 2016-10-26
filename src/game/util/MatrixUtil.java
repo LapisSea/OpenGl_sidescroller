@@ -19,8 +19,7 @@ public class MatrixUtil{
 	}
 	
 	public static boolean equals(Matrix4f m1, Matrix4f m2){
-		if(m1==m2) return true;
-		if(m1==null||m2==null) return false;
+		if(m1!=m2&&(m1==null||m2==null))return false;
 		
 		return  m1.m00==m2.m00&&
 				m1.m01==m2.m01&&

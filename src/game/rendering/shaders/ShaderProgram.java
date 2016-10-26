@@ -1,11 +1,11 @@
 package game.rendering.shaders;
 
-import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.util.vector.Matrix4f;
 
 import game.loading.ResourceShader;
+import game.rendering.Camera;
 import game.rendering.shaders.uniform_load.UniformLoader;
 import game.rendering.shaders.uniform_load.UniformMat4;
 import game.util.LogUtil;
@@ -14,7 +14,7 @@ public abstract class ShaderProgram{
 	
 	private int id,vsId,fsId;
 	private final ResourceShader src;
-	private UniformMat4 transformLoader,viewMatLoader;
+	private UniformMat4 transformLoader,projectionMatLoader,viewMatLoader;
 	
 	public ShaderProgram(ResourceShader src){
 		this.src=src;
@@ -35,6 +35,7 @@ public abstract class ShaderProgram{
 	protected void initUniforms(){
 		LogUtil.println(this);
 		transformLoader=makeUniformLoader(UniformMat4.class, "transform");
+		projectionMatLoader=makeUniformLoader(UniformMat4.class, "projection");
 		viewMatLoader=makeUniformLoader(UniformMat4.class, "viewMat");
 	}
 	
@@ -90,22 +91,15 @@ public abstract class ShaderProgram{
 		return id;
 	}
 	public void applyTransform(Matrix4f transform){
+//		transform.scale(new Vector3f(1F/Display.getWidth(), 1F/Display.getWidth(), 1F/Display.getWidth()));
 		transformLoader.setValue(transform);
 		transformLoader.load();
 	}
-	
-	public void fixAspectRatio(){
 
-		Matrix4f projectionMatrix = new Matrix4f();
-		float aspectRatio = (float)Display.getWidth() / (float)Display.getHeight();
-		 
-		float y_scale = aspectRatio;
-		float x_scale = y_scale / aspectRatio;
-		 
-		projectionMatrix.m00 = x_scale;
-		projectionMatrix.m11 = y_scale;
-		
-		viewMatLoader.setValue(projectionMatrix);
+	public void updateGlobalValues(Matrix4f aspectRatio, Camera camera){
+		projectionMatLoader.setValue(aspectRatio);
+		projectionMatLoader.load();
+		viewMatLoader.setValue(camera.getTransform());
 		viewMatLoader.load();
 	}
 }
