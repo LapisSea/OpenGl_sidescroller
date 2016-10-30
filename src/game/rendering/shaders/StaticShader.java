@@ -13,6 +13,8 @@ public class StaticShader extends ShaderProgram{
 	protected void bindAttributes(){
 		bindAttribute(0, "position");
 		bindAttribute(1, "uvIn");
+		bindAttribute(2, "viewMat");
+		bindAttribute(6, "transform");
 	}
 	
 	@Override

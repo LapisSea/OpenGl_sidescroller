@@ -2,16 +2,14 @@
 
 in vec3 position;
 in vec2 uvIn;
+in mat4 viewMat;
 
 out vec2 uv;
-
-uniform mat4 viewMat;
-uniform mat4 transform;
 
 uniform mat4 projection;
 
 void main(void){
 
-	gl_Position = projection*viewMat*transform*vec4(position,1.0);
+	gl_Position = projection*viewMat*vec4(position,1.0);
 	uv=uvIn;
 }

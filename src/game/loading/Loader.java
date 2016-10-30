@@ -13,6 +13,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
+import org.lwjgl.opengl.GL33;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 
@@ -83,6 +84,34 @@ public class Loader {
 		GL30.glBindVertexArray(vaoID);
 		return vaoID;
 	};
+	
+	public void updateVBO(int vbo, float[] vboData, FloatBuffer buffer){
+		buffer.clear();
+		buffer.put(vboData);
+		buffer.flip();
+		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vbo);
+		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, buffer.capacity(), GL15.GL_STREAM_DRAW);
+		GL15.glBufferSubData(GL15.GL_ARRAY_BUFFER, 0, buffer);
+		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
+	}
+	public int createVBO(int maxSize){
+		int vboID = GL15.glGenBuffers();
+		vbos.add(vboID);
+		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vboID);
+		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, maxSize*4, GL15.GL_STREAM_DRAW);
+		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
+		return vboID;
+	}
+	
+	public void addPerInstanceAttrs(int vaoId, int vboId, int attribute, int dataSize, 
+			int instanceSize, int offset){
+		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vboId);
+		GL30.glBindVertexArray(vaoId);
+		GL20.glVertexAttribPointer(attribute, dataSize, GL11.GL_FLOAT, false, instanceSize*4, offset*4);
+		GL33.glVertexAttribDivisor(attribute, 1);
+		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
+		GL30.glBindVertexArray(0);
+	}
 	
 	private void storeDataInAttributeList(int attribute, int cordinateSize, float[] data){
 		int vboID = GL15.glGenBuffers();
