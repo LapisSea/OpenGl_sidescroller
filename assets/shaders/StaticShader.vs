@@ -5,9 +5,10 @@ in vec2 uvIn;
 
 out vec2 uv;
 
-uniform mat4 transform;
-uniform mat4 projection;
 uniform mat4 viewMat;
+uniform mat4 transform;
+
+uniform mat4 projection;
 
 void main(void){
 

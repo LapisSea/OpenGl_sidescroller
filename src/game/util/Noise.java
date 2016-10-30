@@ -266,6 +266,7 @@ public class Noise{
 		return ((h&1)!=0?-u:u)+((h&2)!=0?-v:v);
 	}
 	
+	@SuppressWarnings("unused")
 	private static float grad(int hash, float x, float y, float z, float t){
 		int h=hash&31; // Convert low 5 bits of hash code into 32 simple
 		float u=h<24?x:y; // gradient directions, and compute dot product.

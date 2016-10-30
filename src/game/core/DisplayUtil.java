@@ -4,7 +4,6 @@ import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.ContextAttribs;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
-import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.PixelFormat;
 
 public class DisplayUtil{
@@ -14,7 +13,7 @@ public class DisplayUtil{
 		try{
 			Display.setTitle("Test LWJGL2 sidescroller");
 			Display.setResizable(true);
-			ContextAttribs atrb=new ContextAttribs(3, 2).withForwardCompatible(true).withProfileCore(true);
+			ContextAttribs atrb=new ContextAttribs(3, 3).withForwardCompatible(true).withProfileCore(true);
 			Display.setDisplayMode(new DisplayMode(1000, 600));
 			Display.create(new PixelFormat(), atrb);
 		}catch(LWJGLException e){
