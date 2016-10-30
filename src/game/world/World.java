@@ -21,6 +21,7 @@ public class World{
 	
 	public void update(){
 		worldTime++;
+//		Game.get().renderer.camera.update();
 	}
 	
 	public Block getBlock(Vec2i pos){
@@ -47,8 +48,9 @@ public class World{
 		VEC2I.set(pos.getX(),pos.getY());
 		Chunk ch=chunks.get(VEC2I);
 		if(ch==null){
-			ch=populate(VEC2I);
-			chunks.put(VEC2I, ch);
+			Vec2i pos1=pos.copy();
+			ch=populate(pos1);
+			chunks.put(pos1, ch);
 		}
 		return ch;
 	}
@@ -66,7 +68,7 @@ public class World{
 			}
 		}
 		//create blur effect
-		int blurRad=0;
+		int blurRad=5;
 		int blurDiv=(int)Math.pow(blurRad*2, 2);
 		if(blurRad>0){
 			for(int x=0;x<Chunk.CHUNK_SIZE;x++){
@@ -118,7 +120,6 @@ public class World{
 
 	public void iterateChunks(Vec2i start, Vec2i end, Consumer<Chunk> hook){
 		if(start.getX()>=end.getX()||start.getY()>=end.getY())return;
-		
 		for(int x=start.getX();x<=end.getX();x++){
 			for(int y=start.getY();y<=end.getY();y++){
 				VEC2I.set(x, y);

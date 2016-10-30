@@ -23,7 +23,7 @@ public class Game{
 	private Timer					timer		=new Timer(20, 60);
 	public Loader					loader		=new Loader();
 	private List<ResizeListener>	resizeables	=new ArrayList<>();
-	private Renderer				renderer	=new Renderer(this);
+	public Renderer					renderer	=new Renderer(this);
 	public final BlockRegistry		blocks		=new BlockRegistry();
 	private boolean					cleanedUp	=false;
 	

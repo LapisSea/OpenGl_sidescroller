@@ -18,8 +18,8 @@ public class Camera{
 	public float rotation=0,zoom=1;
 	
 	public Matrix4f getTransform(){
-		RENDER_OFFSET.x=pos.x;
-		RENDER_OFFSET.y=pos.y;
+		RENDER_OFFSET.x=-pos.x;
+		RENDER_OFFSET.y=-pos.y;
 		float scale=zoom/BASE_VIEW_RAD;
 		ZOOM_SCALE.set(scale,scale);
 		

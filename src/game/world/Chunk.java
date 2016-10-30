@@ -5,7 +5,7 @@ import game.util.objs.vec.Vec2i;
 
 public class Chunk{
 	
-	public static final int CHUNK_SIZE=100;
+	public static final int CHUNK_SIZE=50;
 	
 	private final Vec2i pos;
 	public final byte[][] data=new byte[CHUNK_SIZE][CHUNK_SIZE];

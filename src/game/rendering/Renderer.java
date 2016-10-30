@@ -52,16 +52,18 @@ public class Renderer implements ResizeListener{
 		
 		ShaderProgram shader=en.shader;
 
-		camera.zoom=1F;
-		camera.pos.set(-0, -0);
+		camera.zoom=0.5F;
+		camera.pos.set(-1, -1);
 		shader.start();
 		
 		shader.updateGlobalValues(aspectRatioFixer,camera);
 		
 		World world=game.world;
 		
+		
 		Colider c=camera.new Colider();
-		Vec2i s=new Vec2i((int)Math.floor(c.rect.x/16), (int)Math.floor(c.rect.y/16)),e=new Vec2i((int)Math.ceil(c.rect.getMaxX()/16), (int)Math.ceil(c.rect.getMaxY()/16));
+		Vec2i s=new Vec2i((int)Math.floor(c.rect.x), (int)Math.floor(c.rect.y)),e=new Vec2i((int)Math.ceil(c.rect.getMaxX()), (int)Math.ceil(c.rect.getMaxY()));
+		
 		world.iterateChunks(s,e,chunk->{
 			for(int x=0;x<Chunk.CHUNK_SIZE;x++){
 				for(int y=0;y<Chunk.CHUNK_SIZE;y++){
@@ -69,7 +71,7 @@ public class Renderer implements ResizeListener{
 					Block block=chunk.getBlock(pos);
 					TexturedModel m=block.getModel();
 					if(m!=null){
-						shader.applyTransform(MatrixUtil.createTransformMat(new Vector2f(x, y), 0, new Vector2f(1, 1)));
+						shader.applyTransform(MatrixUtil.createTransformMat(new Vector2f(x+chunk.getX()*Chunk.CHUNK_SIZE, y+chunk.getY()*Chunk.CHUNK_SIZE), 0, new Vector2f(1, 1)));
 						render(m);
 					}
 				}

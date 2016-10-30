@@ -25,7 +25,7 @@ public class UniformMat4 extends UniformLoaderObj<Matrix4f>{
 	}
 	@Override
 	protected boolean shouldSend(){
-		return MatrixUtil.equals(value,lastValue);
+		return !MatrixUtil.equals(value,lastValue);
 	}
 	
 }
