@@ -9,6 +9,7 @@ import org.lwjgl.opengl.PixelFormat;
 public class DisplayUtil{
 	
 	
+	
 	public static void create(){
 		try{
 			Display.setTitle("Test LWJGL2 sidescroller");
@@ -23,7 +24,7 @@ public class DisplayUtil{
 	}
 	
 	public static void update(){
-		Display.sync(60);
+		Display.sync(Game.get().getTimer().getTargetedFps());
 		Display.update();
 	}
 	

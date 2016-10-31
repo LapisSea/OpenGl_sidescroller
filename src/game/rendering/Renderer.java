@@ -34,7 +34,7 @@ public class Renderer implements ResizeListener{
 	public final Camera camera=new Camera();
 	
 	private int vbo;//VBO for storing instances' data
-	private static final int MAX_DATA_COUNT = 1024;
+	private static final int MAX_DATA_COUNT = 1024*2*2;
 	private static final int DATA_PER_SPRITE = 16;//4x4 floats for transformation matrix and 4x4 for view 
 	private static final FloatBuffer buffer = BufferUtils.createFloatBuffer(MAX_DATA_COUNT*DATA_PER_SPRITE);
 	public int pointer = 0;
@@ -56,7 +56,7 @@ public class Renderer implements ResizeListener{
 	public void renderScene(){
 		prepare();
 		
-		camera.zoom=1F;
+		camera.zoom=1.25F;
 		camera.pos.set(-0, -0);
 		shader.start();
 		
@@ -64,16 +64,21 @@ public class Renderer implements ResizeListener{
 		
 		World world=game.world;
 		
-		Matrix4f[] transform=new Matrix4f[50];
+		Matrix4f[] transform=new Matrix4f[400];
+		
 		
 		double tim=System.currentTimeMillis()/1000D;
 		
+		float x1=(float)Math.sin((tim)%(Math.PI*2)), y1=(float)Math.cos((tim)%(Math.PI*2));
+		
 		for(int i=0;i<transform.length;i++){
-			transform[i]=MatrixUtil.createTransformMat(
-					new Vector2f((float)Math.sin((tim+i*2)%(Math.PI*2))*10,(float)Math.cos((tim*2+i/3.5F)%(Math.PI*2))*5), 
-					i+(float)((tim*100)%360), 
-					new Vector2f(1,1));
+			
+			float x=(float)Math.sin((tim+Math.sqrt(i)*2.2)%(Math.PI*2));
+			float y=(float)Math.cos((tim*2+i*i/37F)%(Math.PI*2));
+			
+			transform[i]=MatrixUtil.createTransformMat(new Vector2f(x*10,y*5), i+(float)((tim*100)%360), new Vector2f(x1+x,y1+y));
 		}
+		
 		drawInstancedModel(Models.stone1, transform);
 		
 		
@@ -89,8 +94,10 @@ public class Renderer implements ResizeListener{
 		this.game.loader.updateVBO(vbo, vboData, buffer);
 		
 		
-
+		
 		glBindVertexArray(model.getVaoID());
+		bindTexture(model.getTexture());
+		
 		glEnableVertexAttribArray(0);
 		glEnableVertexAttribArray(1);
 		glEnableVertexAttribArray(2);
@@ -98,9 +105,7 @@ public class Renderer implements ResizeListener{
 		glEnableVertexAttribArray(4);
 		glEnableVertexAttribArray(5);
 		
-		bindTexture(model.getTexture());
-		
-		GL31.glDrawArraysInstanced(GL11.GL_TRIANGLE_STRIP, 0, Models.dirt1.getVertexCount(), MAX_DATA_COUNT);
+		GL31.glDrawArraysInstanced(GL11.GL_TRIANGLE_STRIP, 0, Models.dirt1.getVertexCount(), transform.length);
 		
 		glDisableVertexAttribArray(0);
 		glDisableVertexAttribArray(1);

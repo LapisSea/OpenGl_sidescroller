@@ -7,7 +7,7 @@ public class Timer{
 	private long				lastTimeUpdated,lastTimeRendered,/**update period*/up,/**frame period*/fp,lastSec;
 	private static final int	SECOND	=1000000000;
 	
-	private int		update,updates,frames,updatesCount,framesCount;
+	private int		update,updates,frames,updatesCount,framesCount,ups, fps;
 	private boolean	render;
 	private float	partialTick;
 	
@@ -41,10 +41,12 @@ public class Timer{
 	}
 	
 	public void setUPS(int ups){
+		this.ups=ups;
 		up=SECOND/ups;
 	}
 	
 	public void setFPS(int fps){
+		this.fps=fps;
 		fp=SECOND/fps;
 	}
 	
@@ -87,5 +89,13 @@ public class Timer{
 	
 	public float getPartialTick(){
 		return partialTick;
+	}
+	
+	public int getTargetedFps(){
+		return fps;
+	}
+	
+	public int getTargetedUps(){
+		return ups;
 	}
 }

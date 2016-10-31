@@ -15,19 +15,18 @@ import game.world.World;
 public class Game{
 	
 	private static Game instance;
+	
 	public static Game get(){
 		return instance;
 	}
 	
 	private boolean					paused		=false;
-	private Timer					timer		=new Timer(20, 60);
+	private Timer					timer		=new Timer(20, 200);
 	public Loader					loader		=new Loader();
 	private List<ResizeListener>	resizeables	=new ArrayList<>();
 	private Renderer				renderer	=new Renderer(this);
 	public final BlockRegistry		blocks		=new BlockRegistry();
 	private boolean					cleanedUp	=false;
-	
-	
 	
 	public World world;
 	
@@ -44,29 +43,28 @@ public class Game{
 		
 		while(!Display.isCloseRequested()){
 			
-			timer.update();
+			getTimer().update();
 			
-			
-			if(timer.shouldUpdate()){
+			if(getTimer().shouldUpdate()){
 				
-				if(!paused)gameUpdate();
-				timer.updateFinish();
+				if(!paused) gameUpdate();
+				getTimer().updateFinish();
 			}
 			
-			if(timer.shouldRender()){
+			if(getTimer().shouldRender()){
 				
 				renderer.renderScene();
-				timer.renderFinish();
+				getTimer().renderFinish();
 				
 			}
-			
 			
 			Util.sleep(1);
 		}
 		
 	}
+	
 	public void dispose(){
-		if(cleanedUp)return;
+		if(cleanedUp) return;
 		cleanedUp=true;
 		
 		DisplayUtil.close();
@@ -80,13 +78,16 @@ public class Game{
 		resizeables.forEach(r->r.onResize(x, y));
 	}
 	
-	
 	private void gameUpdate(){
 		world.update();
 	}
 	
 	public float getPartialTick(){
-		return timer.getPartialTick();
+		return getTimer().getPartialTick();
 	}
-
+	
+	public Timer getTimer(){
+		return timer;
+	}
+	
 }
