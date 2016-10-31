@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.Random;
 import java.util.function.Consumer;
 
-import game.util.Noise;
 import game.util.objs.vec.Vec2i;
 
 public class World{
@@ -62,7 +61,7 @@ public class World{
 		//gen random values
 		for(int x=0;x<Chunk.CHUNK_SIZE;x++){
 			for(int y=0;y<Chunk.CHUNK_SIZE;y++){
-				level[x][y]=0.5F+Noise.Generate(x+pos.getX()*Chunk.CHUNK_SIZE, y+pos.getY()*Chunk.CHUNK_SIZE)/2;
+				level[x][y]=(float)(0.5F+Math.random()/2);
 			}
 		}
 		//create blur effect

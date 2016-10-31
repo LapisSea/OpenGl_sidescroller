@@ -148,4 +148,11 @@ public class Loader {
 		buffer.flip();
 		return buffer;
 	}
+
+	public void initModelForInstanced(TexturedModel model, int vbo, int instanceSize){
+		addPerInstanceAttrs(model.getVaoID(), vbo, 2, 4, instanceSize, 0);
+		addPerInstanceAttrs(model.getVaoID(), vbo, 3, 4, instanceSize, 4);
+		addPerInstanceAttrs(model.getVaoID(), vbo, 4, 4, instanceSize, 8);
+		addPerInstanceAttrs(model.getVaoID(), vbo, 5, 4, instanceSize, 12);
+	}
 }

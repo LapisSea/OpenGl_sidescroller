@@ -11,10 +11,10 @@ public class Models{
 	
 	public static void init(Loader loader){
 		stone1=loader.loadModel(new float[]{
-				0,1,0,
 				0,0,0,
 				1,0,0,
-				1,1,0
+				1,1,0,
+				0,1,0
 		}, new float[]{
 				0,0,
 				0,1,
@@ -25,10 +25,10 @@ public class Models{
 				3,1,2
 		}, new ResourceTexture("Stone1").load());
 		stone2=loader.loadModel(new float[]{
-				0,1,0,
 				0,0,0,
 				1,0,0,
-				1,1,0
+				1,1,0,
+				0,1,0
 		}, new float[]{
 				0,0,
 				0,1,
@@ -39,10 +39,10 @@ public class Models{
 				3,1,2
 		}, new ResourceTexture("Stone2").load());
 		dirt1=loader.loadModel(new float[]{
-				0,1,0,
 				0,0,0,
 				1,0,0,
-				1,1,0
+				1,1,0,
+				0,1,0
 		}, new float[]{
 				0,0,
 				0,1,
