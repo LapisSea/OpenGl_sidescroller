@@ -18,17 +18,18 @@ import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 
 import game.loading.textures.IGLTexture;
+import game.rendering.models.BasicModel;
 import game.rendering.models.TexturedModel;
 import game.util.LogUtil;
 
 public class Loader {
 	
-	private List<Integer> vaos = new ArrayList<>();
-	private List<Integer> vbos = new ArrayList<>();
-	private List<Integer> textures = new ArrayList<>();
+	private static List<Integer> vaos = new ArrayList<>();
+	private static List<Integer> vbos = new ArrayList<>();
+	private static List<Integer> textures = new ArrayList<>();
 	private static final ResourceTexture DEFAULT_IMG=new ResourceTexture("default");
 	
-	public TexturedModel loadModel(float[] positions, float[] uvs, int[] indices, IGLTexture texture){
+	public static TexturedModel loadModel(float[] positions, float[] uvs, int[] indices, IGLTexture texture){
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		int vaoID = createVAO();
 		bindIndicesBuffer(indices);
@@ -38,7 +39,7 @@ public class Loader {
 		return new TexturedModel(texture, vaoID, indices.length);
 	};
 	
-	public int loadTexture(ResourceTexture src){
+	public static int loadTexture(ResourceTexture src){
 		Texture texture=null;
 		int textureId=0;
 		try{
@@ -78,14 +79,14 @@ public class Loader {
 		}
 	}
 	
-	private int createVAO(){
+	private static int createVAO(){
 		int vaoID = GL30.glGenVertexArrays();
 		vaos.add(vaoID);
 		GL30.glBindVertexArray(vaoID);
 		return vaoID;
 	};
 	
-	public void updateVBO(int vbo, float[] vboData, FloatBuffer buffer){
+	public static void updateVBO(int vbo, float[] vboData, FloatBuffer buffer){
 		buffer.clear();
 		buffer.put(vboData);
 		buffer.flip();
@@ -94,7 +95,7 @@ public class Loader {
 		GL15.glBufferSubData(GL15.GL_ARRAY_BUFFER, 0, buffer);
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
 	}
-	public int createVBO(int maxSize){
+	public static int createVBO(int maxSize){
 		int vboID = GL15.glGenBuffers();
 		vbos.add(vboID);
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vboID);
@@ -103,7 +104,7 @@ public class Loader {
 		return vboID;
 	}
 	
-	public void addPerInstanceAttrs(int vaoId, int vboId, int attribute, int dataSize, 
+	public static void addPerInstanceAttrs(int vaoId, int vboId, int attribute, int dataSize, 
 			int instanceSize, int offset){
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vboId);
 		GL30.glBindVertexArray(vaoId);
@@ -113,7 +114,7 @@ public class Loader {
 		GL30.glBindVertexArray(0);
 	}
 	
-	private void storeDataInAttributeList(int attribute, int cordinateSize, float[] data){
+	private static void storeDataInAttributeList(int attribute, int cordinateSize, float[] data){
 		int vboID = GL15.glGenBuffers();
 		vbos.add(vboID);
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vboID);
@@ -123,11 +124,11 @@ public class Loader {
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
 	}
 	
-	private void unbindVAO(){
+	private static void unbindVAO(){
 		GL30.glBindVertexArray(0);
 	}
 	
-	private void bindIndicesBuffer(int[] indices){
+	private static void bindIndicesBuffer(int[] indices){
 		int vboID = GL15.glGenBuffers();
 		vbos.add(vboID);
 		GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, vboID);
@@ -135,21 +136,21 @@ public class Loader {
 		GL15.glBufferData(GL15.GL_ELEMENT_ARRAY_BUFFER, buffer, GL15.GL_STATIC_DRAW);
 	}
 	
-	private IntBuffer storeDataInIntBuffer(int[] data){
+	private static IntBuffer storeDataInIntBuffer(int[] data){
 		IntBuffer buffer = BufferUtils.createIntBuffer(data.length);
 		buffer.put(data);
 		buffer.flip();
 		return buffer;
 	}
 	
-	private FloatBuffer storeDataInFloatBuffer(float[] data){
+	private static FloatBuffer storeDataInFloatBuffer(float[] data){
 		FloatBuffer buffer = BufferUtils.createFloatBuffer(data.length);
 		buffer.put(data);
 		buffer.flip();
 		return buffer;
 	}
 
-	public void initModelForInstanced(TexturedModel model, int vbo, int instanceSize){
+	public static void initModelForInstanced(BasicModel model, int vbo, int instanceSize){
 		addPerInstanceAttrs(model.getVaoID(), vbo, 2, 4, instanceSize, 0);
 		addPerInstanceAttrs(model.getVaoID(), vbo, 3, 4, instanceSize, 4);
 		addPerInstanceAttrs(model.getVaoID(), vbo, 4, 4, instanceSize, 8);

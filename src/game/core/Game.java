@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.lwjgl.opengl.Display;
 
-import game.loading.Loader;
 import game.rendering.Renderer;
 import game.util.Util;
 import game.util.interf.ResizeListener;
@@ -22,7 +21,6 @@ public class Game{
 	
 	private boolean					paused		=false;
 	private Timer					timer		=new Timer(20, 200);
-	public Loader					loader		=new Loader();
 	private List<ResizeListener>	resizeables	=new ArrayList<>();
 	private Renderer				renderer	=new Renderer(this);
 	public final BlockRegistry		blocks		=new BlockRegistry();

@@ -4,9 +4,6 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL30.*;
 
-import java.nio.FloatBuffer;
-
-import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
@@ -19,6 +16,7 @@ import game.loading.textures.IGLTexture;
 import game.rendering.models.BasicModel;
 import game.rendering.models.TexturedModel;
 import game.rendering.shaders.ShaderProgram;
+import game.rendering.shaders.SmartVbo;
 import game.rendering.shaders.StaticShader;
 import game.util.MatrixUtil;
 import game.util.interf.ResizeListener;
@@ -31,13 +29,11 @@ public class Renderer implements ResizeListener{
 	private final Game		game;
 	private StaticShader	shader;
 	private Matrix4f		aspectRatioFixer=new Matrix4f();
-	public final Camera camera=new Camera();
+	public final Camera 	camera=new Camera();
+	private SmartVbo 		vbo;
+	public int				pointer = 0;
 	
-	private int vbo;//VBO for storing instances' data
-	private static final int MAX_DATA_COUNT = 1024*2*2;
-	private static final int DATA_PER_SPRITE = 16;//4x4 floats for transformation matrix and 4x4 for view 
-	private static final FloatBuffer buffer = BufferUtils.createFloatBuffer(MAX_DATA_COUNT*DATA_PER_SPRITE);
-	public int pointer = 0;
+	
 	
 	public Renderer(Game game){
 		this.game=game;
@@ -45,11 +41,9 @@ public class Renderer implements ResizeListener{
 	}
 	
 	public void init(){
-		this.vbo = game.loader.createVBO(MAX_DATA_COUNT*DATA_PER_SPRITE);
-		Models.init(game.loader);
-		game.loader.initModelForInstanced(Models.dirt1, vbo, DATA_PER_SPRITE);
-		game.loader.initModelForInstanced(Models.stone1, vbo, DATA_PER_SPRITE);
-		game.loader.initModelForInstanced(Models.stone2, vbo, DATA_PER_SPRITE);
+		Models.init();
+		vbo=new SmartVbo(16/*4x4 floats for transformation matrix and 4x4 for view */);
+		vbo.bind(Models.dirt1,Models.stone1,Models.stone2);
 		shader=new StaticShader();
 	}
 	
@@ -91,8 +85,7 @@ public class Renderer implements ResizeListener{
 		
 		pointer = 0;
 		for(int i=0;i<transform.length;i++)updateModelViewMatrix(transform[i], cam, vboData);
-		this.game.loader.updateVBO(vbo, vboData, buffer);
-		
+		vbo.update(vboData);
 		
 		
 		glBindVertexArray(model.getVaoID());

@@ -33,7 +33,6 @@ public abstract class ShaderProgram{
 	}
 
 	protected void initUniforms(){
-		LogUtil.println(this);
 		projectionMatLoader=makeUniformLoader(UniformMat4.class, "projection");
 	}
 	
