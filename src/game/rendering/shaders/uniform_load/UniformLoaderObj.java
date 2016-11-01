@@ -16,11 +16,11 @@ public abstract class UniformLoaderObj<T> extends UniformLoader{
 	
 	@Override
 	protected boolean shouldSend(){
-		return value!=null&&value.equals(lastValue);
+		return value!=null&&!value.equals(lastValue);
 	}
 	@Override
 	public boolean load(){
-		if(shouldSend())return false;
+		if(!shouldSend())return false;
 		lastValue=value;
 		send(value);
 		return true;

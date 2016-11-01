@@ -14,7 +14,7 @@ public abstract class ShaderProgram{
 	
 	private int id,vsId,fsId;
 	private final ResourceShader src;
-	private UniformMat4 projectionMatLoader;
+	private UniformMat4 projectionMatLoader,cameraMatLoader;
 	
 	public ShaderProgram(ResourceShader src){
 		this.src=src;
@@ -34,6 +34,7 @@ public abstract class ShaderProgram{
 
 	protected void initUniforms(){
 		projectionMatLoader=makeUniformLoader(UniformMat4.class, "projection");
+		cameraMatLoader=makeUniformLoader(UniformMat4.class, "cameraMat");
 	}
 	
 	
@@ -87,12 +88,11 @@ public abstract class ShaderProgram{
 	public int getId(){
 		return id;
 	}
-	public void applyTransform(Matrix4f transform){
-//		transform.scale(new Vector3f(1F/Display.getWidth(), 1F/Display.getWidth(), 1F/Display.getWidth()));
-	}
 
 	public void updateGlobalValues(Matrix4f aspectRatio, Camera camera){
 		projectionMatLoader.setValue(aspectRatio);
 		projectionMatLoader.load();
+		cameraMatLoader.setValue(camera.getTransform());
+		cameraMatLoader.load();
 	}
 }

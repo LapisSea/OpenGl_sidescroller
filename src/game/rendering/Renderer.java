@@ -34,7 +34,6 @@ public class Renderer implements ResizeListener{
 	public int				pointer = 0;
 	
 	
-	
 	public Renderer(Game game){
 		this.game=game;
 		game.addResizeListener(this);
@@ -84,7 +83,7 @@ public class Renderer implements ResizeListener{
 		float[] vboData=new float[transform.length*16];
 		
 		pointer = 0;
-		for(int i=0;i<transform.length;i++)updateModelViewMatrix(transform[i], cam, vboData);
+		for(int i=0;i<transform.length;i++)storeMatrixData(transform[i], vboData);
 		vbo.update(vboData);
 		
 		
@@ -127,10 +126,6 @@ public class Renderer implements ResizeListener{
 		vboData[pointer++] = matrix.m32;
 		vboData[pointer++] = matrix.m33;
 	}
-	private void updateModelViewMatrix(Matrix4f modelMatrix, Matrix4f viewMatrix, float[] vboData){
-		Matrix4f modelViewMatrix = Matrix4f.mul(viewMatrix,  modelMatrix, null);
-		storeMatrixData(modelViewMatrix, vboData);
-	}
 	
 	private void bindTexture(IGLTexture texture){
 		GL13.glActiveTexture(GL13.GL_TEXTURE0);
@@ -171,7 +166,7 @@ public class Renderer implements ResizeListener{
 		
 		shader.updateGlobalValues(aspectRatioFixer,camera);
 		
-		shader.applyTransform(MatrixUtil.createTransformMat(entity.pos, entity.rotation, entity.scale));
+//		shader.applyTransform(MatrixUtil.createTransformMat(entity.pos, entity.rotation, entity.scale));
 		model.getTexture().bind();
 		
 		render(model);

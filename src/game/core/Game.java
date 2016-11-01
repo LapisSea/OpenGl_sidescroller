@@ -20,7 +20,7 @@ public class Game{
 	}
 	
 	private boolean					paused		=false;
-	private Timer					timer		=new Timer(20, 200);
+	private Timer					timer		=new Timer(20, 60);
 	private List<ResizeListener>	resizeables	=new ArrayList<>();
 	private Renderer				renderer	=new Renderer(this);
 	public final BlockRegistry		blocks		=new BlockRegistry();

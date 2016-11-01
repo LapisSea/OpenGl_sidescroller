@@ -7,7 +7,6 @@ import org.lwjgl.opengl.GL20;
 import org.lwjgl.util.vector.Matrix4f;
 
 import game.rendering.shaders.ShaderProgram;
-import game.util.MatrixUtil;
 
 public class UniformMat4 extends UniformLoaderObj<Matrix4f>{
 	
@@ -25,7 +24,7 @@ public class UniformMat4 extends UniformLoaderObj<Matrix4f>{
 	}
 	@Override
 	protected boolean shouldSend(){
-		return MatrixUtil.equals(value,lastValue);
+		return true;//!MatrixUtil.equals(value,lastValue);
 	}
 	
 }
